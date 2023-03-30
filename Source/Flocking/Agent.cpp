@@ -8,7 +8,7 @@ AAgent::AAgent(){
 	PrimaryActorTick.bCanEverTick = true;
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("AgentMesh"));	
 	RootComponent = Mesh;
-	Velocity = FVector(0.f);
+	Velocity = FVector(FMath::RandRange(-1.f, 1.f), FMath::RandRange(-1.f, 1.f), FMath::RandRange(-1.f, 1.f));
 }
 
 void AAgent::BeginPlay(){
