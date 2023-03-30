@@ -7,6 +7,7 @@
 #define RULE1_FACTOR 100
 #define RULE2_FACTOR 100
 #define RULE3_FACTOR 8
+#define RULE_GOAL_FACTOR 100
 #define OVERALL_FACTOR 5
 
 void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh ) {
@@ -38,8 +39,9 @@ void UFlockingManager::Flock() {
         FVector v1 = Rule1(agent);
         FVector v2 = Rule2(agent);
         FVector v3 = Rule3(agent);
+        FVector vG = RuleGoal(agent);
 
-        agent->Velocity += (v1 + v2 + v3) / OVERALL_FACTOR;
+        agent->Velocity += (v1 + v2 + v3 + vG) / OVERALL_FACTOR;
     }
 }
 
@@ -82,4 +84,8 @@ FVector UFlockingManager::Rule3( AAgent * boid ) {
 
     pv /= (Agents.Num() - 1);
     return (pv - boid->Velocity) / RULE3_FACTOR;
+}
+
+FVector UFlockingManager::RuleGoal( AAgent * boid ) {
+    return FVector(0.f);
 }

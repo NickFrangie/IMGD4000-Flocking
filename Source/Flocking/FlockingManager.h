@@ -21,6 +21,7 @@ private:
 	FVector Rule1( AAgent * boid );
 	FVector Rule2( AAgent * boid );
 	FVector Rule3( AAgent * boid );
+	FVector RuleGoal( AAgent * boid );
 
 	UWorld *World;	
 	bool initialized;
