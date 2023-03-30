@@ -3,10 +3,11 @@
 
 #include "FlockingManager.h"
 
-#define AGENT_COUNT 10
+#define AGENT_COUNT 100
 #define RULE1_FACTOR 100
-#define RULE2_FACTOR 10
-#define RULE3_FACTOR 100
+#define RULE2_FACTOR 100
+#define RULE3_FACTOR 8
+#define OVERALL_FACTOR 5
 
 void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh ) {
     UE_LOG(LogTemp, Warning, TEXT("Manager initialized"));
@@ -38,7 +39,7 @@ void UFlockingManager::Flock() {
         FVector v2 = Rule2(agent);
         FVector v3 = Rule3(agent);
 
-        agent->Velocity += v1 + v2 + v3;
+        agent->Velocity += (v1 + v2 + v3) / OVERALL_FACTOR;
     }
 }
 
@@ -51,7 +52,7 @@ FVector UFlockingManager::Rule1( AAgent * boid ) {
         }
     }
 
-    pc = pc / (Agents.Num() - 1);
+    pc /= (Agents.Num() - 1);
     return (pc - boid->GetActorLocation()) / RULE1_FACTOR;
 }
 
@@ -71,5 +72,14 @@ FVector UFlockingManager::Rule2( AAgent * boid ) {
 }
 
 FVector UFlockingManager::Rule3( AAgent * boid ) {
-    return FVector(0.f);
+    FVector pv = FVector(0.f);
+    for (int i = 0; i < Agents.Num(); i++) {
+        AAgent * agent = Agents[i];
+        if (agent != boid) {
+            pv += agent->Velocity;
+        }
+    }
+
+    pv /= (Agents.Num() - 1);
+    return (pv - boid->Velocity) / RULE3_FACTOR;
 }
