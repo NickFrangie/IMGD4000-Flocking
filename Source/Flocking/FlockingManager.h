@@ -18,9 +18,9 @@ public:
 	void Flock();
 
 private:
-	FVector Rule1( AAgent * agent );
-	FVector Rule2( AAgent * agent );
-	FVector Rule3( AAgent * agent );
+	FVector Rule1( AAgent * boid );
+	FVector Rule2( AAgent * boid );
+	FVector Rule3( AAgent * boid );
 
 	UWorld *World;	
 	bool initialized;

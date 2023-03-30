@@ -5,7 +5,7 @@
 
 #define AGENT_COUNT 10
 #define RULE1_FACTOR 100
-#define RULE2_FACTOR 100
+#define RULE2_FACTOR 10
 #define RULE3_FACTOR 100
 
 void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh ) {
@@ -34,7 +34,7 @@ void UFlockingManager::Flock() {
     for (int i = 0; i < Agents.Num(); i++) {
         AAgent * agent = Agents[i];
 
-        FVector v1 = Rule1(agent) / RULE1_FACTOR;
+        FVector v1 = Rule1(agent);
         FVector v2 = Rule2(agent);
         FVector v3 = Rule3(agent);
 
@@ -52,13 +52,24 @@ FVector UFlockingManager::Rule1( AAgent * boid ) {
     }
 
     pc = pc / (Agents.Num() - 1);
-    return pc - boid->GetActorLocation();
+    return (pc - boid->GetActorLocation()) / RULE1_FACTOR;
 }
 
-FVector UFlockingManager::Rule2( AAgent * agent ) {
-    return FVector(0.f);
+FVector UFlockingManager::Rule2( AAgent * boid ) {
+    FVector c = FVector(0.f);
+    for (int i = 0; i < Agents.Num(); i++) {
+        AAgent * agent = Agents[i];
+        if (agent != boid) {
+            float dist = FVector::Dist(agent->GetActorLocation(), boid->GetActorLocation());
+            if (FMath::Abs(dist) < RULE2_FACTOR) {
+                c -= (agent->GetActorLocation() - boid->GetActorLocation());
+            }
+        }
+    }
+
+    return c;
 }
 
-FVector UFlockingManager::Rule3( AAgent * agent ) {
+FVector UFlockingManager::Rule3( AAgent * boid ) {
     return FVector(0.f);
 }
