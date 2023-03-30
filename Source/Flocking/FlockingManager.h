@@ -18,6 +18,10 @@ public:
 	void Flock();
 
 private:
+	FVector Rule1( AAgent * agent );
+	FVector Rule2( AAgent * agent );
+	FVector Rule3( AAgent * agent );
+
 	UWorld *World;	
 	bool initialized;
 	TArray<class AAgent *> Agents;

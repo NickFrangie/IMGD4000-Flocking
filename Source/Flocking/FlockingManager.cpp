@@ -28,5 +28,25 @@ void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh ) {
 }
 
 void UFlockingManager::Flock() {
+    for (int i = 0; i < Agents.Num(); i++) {
+        AAgent * agent = Agents[i];
 
+        FVector v1 = Rule1(agent);
+        FVector v2 = Rule2(agent);
+        FVector v3 = Rule3(agent);
+
+        FVector velocity = agent->Velocity + v1 + v2 + v3;
+    }
+}
+
+FVector UFlockingManager::Rule1( AAgent * agent ) {
+    return FVector(0.f);
+}
+
+FVector UFlockingManager::Rule2( AAgent * agent ) {
+    return FVector(0.f);
+}
+
+FVector UFlockingManager::Rule3( AAgent * agent ) {
+    return FVector(0.f);
 }
