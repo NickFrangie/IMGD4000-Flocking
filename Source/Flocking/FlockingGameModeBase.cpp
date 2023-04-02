@@ -13,7 +13,7 @@ void AFlockingGameModeBase::BeginPlay() {
     UE_LOG(LogTemp, Warning, TEXT("GAMEMODE BEGINPLAY()"));
 
     // Spawn Goal Object
-    Goal = GetWorld()->SpawnActor<AActor>(Blueprint);
+    if (Blueprint) Goal = GetWorld()->SpawnActor<AActor>(Blueprint);
 
     // Spawn Flocking Manager
     Manager = NewObject<UFlockingManager>();
