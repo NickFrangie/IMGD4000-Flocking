@@ -5,9 +5,9 @@
 
 #define AGENT_COUNT 100
 #define RULE1_FACTOR 100
-#define RULE2_FACTOR 100
+#define RULE2_FACTOR 125
 #define RULE3_FACTOR 8
-#define RULE_GOAL_FACTOR 150
+#define RULE_GOAL_FACTOR 100
 #define OVERALL_FACTOR 50
 
 void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh, AActor *goal  ) {
