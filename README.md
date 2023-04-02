@@ -1,7 +1,7 @@
 # IMGD4000: Agent-based Simulation Assignment
 
 Programming assignment for implementing a boids swarm algorithm, created for IMGD 4000.
-Gameplay Video: "insert link here"
+Gameplay Video: https://clipchamp.com/watch/XhdourpqDyE
 
 ## Additional Implemented Rule: Goal Setting
 
