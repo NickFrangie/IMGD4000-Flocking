@@ -14,7 +14,7 @@ class FLOCKING_API UFlockingManager : public UObject
 public:
 	GENERATED_BODY()
 
-	void Init( UWorld *world, UStaticMeshComponent *mesh );
+	void Init( UWorld *world, UStaticMeshComponent *mesh, AActor *goal );
 	void Flock();
 
 private:
@@ -24,6 +24,7 @@ private:
 	FVector RuleGoal( AAgent * boid );
 
 	UWorld *World;	
+	AActor *Goal;
 	bool initialized;
 	TArray<class AAgent *> Agents;
 };

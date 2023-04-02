@@ -11,8 +11,14 @@ AFlockingGameModeBase::AFlockingGameModeBase() {
 void AFlockingGameModeBase::BeginPlay() {
     Super::BeginPlay();
     UE_LOG(LogTemp, Warning, TEXT("GAMEMODE BEGINPLAY()"));
+
+    // Spawn Goal Object
+    Goal = GetWorld()->SpawnActor<AActor>(Blueprint);
+
+    // Spawn Flocking Manager
     Manager = NewObject<UFlockingManager>();
-    Manager->Init( GetWorld(), AgentMesh );
+    
+    Manager->Init( GetWorld(), AgentMesh, Goal );
 }
 
 void AFlockingGameModeBase::Tick( float DeltaTime ) {

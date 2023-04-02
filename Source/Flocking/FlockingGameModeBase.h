@@ -17,7 +17,13 @@ class FLOCKING_API AFlockingGameModeBase : public AGameModeBase
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent * AgentMesh;
 
-	UPROPERTY() UFlockingManager *Manager;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AActor> Blueprint;
+
+	UPROPERTY() 
+	AActor *Goal;
+	UPROPERTY() 
+	UFlockingManager *Manager;
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;

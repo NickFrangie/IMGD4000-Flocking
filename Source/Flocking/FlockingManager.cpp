@@ -7,21 +7,23 @@
 #define RULE1_FACTOR 100
 #define RULE2_FACTOR 100
 #define RULE3_FACTOR 8
-#define RULE_GOAL_FACTOR 100
-#define OVERALL_FACTOR 5
+#define RULE_GOAL_FACTOR 150
+#define OVERALL_FACTOR 50
 
-void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh ) {
+void UFlockingManager::Init( UWorld *world, UStaticMeshComponent *mesh, AActor *goal  ) {
     UE_LOG(LogTemp, Warning, TEXT("Manager initialized"));
     
     World = world;
+    Goal = goal;
+
     float incr = (PI * 2.f) / AGENT_COUNT;
     for( int i = 0; i < AGENT_COUNT; i++ ) {
         if( World != nullptr ) {
             FRotator rotation = FRotator();
 
             FVector location = FVector();
-            location.X = FMath::Sin( incr * i ) * 150.f;
-            location.Z = FMath::Cos( incr * i ) * 150.f;
+            location.X = FMath::Sin( incr * i ) * 150.f + FMath::RandRange(-2000, 2000);
+            location.Z = FMath::Cos( incr * i ) * 150.f + FMath::RandRange(-2000, 2000);
 
             AAgent * agent = World->SpawnActor<AAgent>( location, rotation );
             agent->Init( mesh, i );
@@ -87,5 +89,8 @@ FVector UFlockingManager::Rule3( AAgent * boid ) {
 }
 
 FVector UFlockingManager::RuleGoal( AAgent * boid ) {
-    return FVector(0.f);
+    if (!Goal) return FVector(0.f);
+
+    FVector location = Goal->GetActorLocation();
+	return (location - boid->GetActorLocation()) / RULE_GOAL_FACTOR;
 }
